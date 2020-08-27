@@ -29,6 +29,7 @@ yay
 # Archcraft Packages
 ac-about-dev
 ac-fonts
+ac-get-started
 ac-grid-icon-theme
 ac-grub2-theme-slaze
 ac-grub2-theme-stylish
