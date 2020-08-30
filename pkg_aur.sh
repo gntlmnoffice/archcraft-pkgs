@@ -4,7 +4,7 @@
 
 ## Dirs
 DIR="$(pwd)"
-LIST=(colorpicker betterlockscreen ksuperkey networkmanager-dmenu-git obmenu-generator perl-linux-desktopfiles polybar yay compton-tryone-git) #rofi-git:failed(BUG)
+LIST=(colorpicker betterlockscreen ksuperkey networkmanager-dmenu-git obmenu-generator perl-linux-desktopfiles polybar yay compton-tryone-git rofi-git)
 
 # Sort packages
 PKGS=($(for i in "${LIST[@]}"; do echo $i; done | sort))
@@ -138,13 +138,18 @@ setup_repo () {
 	repoargs=("-n -R archcraft.db.tar.gz *.pkg.tar.zst")
 	{ echo "Setting up repository & updating database..."; echo; }
 	{ cd $DIR/x86_64; rm -f archcraft.*; repo-add $repoargs; }
-	{ echo; echo "Done!"; echo; }
+	{ echo; echo "Database Updated."; echo; }
 }
 
 # Cleanup
 cleanup () {
 	echo "Cleaning up..."
-	{ rm -rf $DIR/aur_pkgs; echo; exit 0; }
+	rm -rf $DIR/aur_pkgs
+	if [[ ! -d "$DIR/aur_pkgs" ]]; then
+		{ echo; echo "Cleanup Completed."; exit 0; }
+	else
+		{ echo; echo "Cleanup failed."; exit 1; }
+	fi	
 }
 
 delete_pkg
