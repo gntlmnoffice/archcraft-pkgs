@@ -4,7 +4,7 @@
 
 ## Dirs
 DIR="$(pwd)"
-LIST=(colorpicker betterlockscreen ksuperkey networkmanager-dmenu-git obmenu-generator perl-linux-desktopfiles polybar yay compton-tryone-git rofi-git)
+LIST=(colorpicker betterlockscreen ksuperkey networkmanager-dmenu-git obmenu-generator perl-linux-desktopfiles polybar yay compton-tryone-git rofi-git cava downgrade pyroom pygtk toilet tty-clock unimatrix-git)
 
 # Sort packages
 PKGS=($(for i in "${LIST[@]}"; do echo $i; done | sort))
@@ -43,6 +43,7 @@ delete_pkg () {
 			{ echo "Deleting previous '${pkg}' .pkg file..."; rm -r ${pkg}-*; }
 		done
 		{ echo "Deleting previous 'plymouth' .pkg file..."; rm -r plymouth-*; }
+		{ echo "Deleting previous 'grub-silent' .pkg file..."; rm -r grub-silent-*; }
 		{ echo; echo "Done!"; echo; }
 	fi
 }
@@ -133,6 +134,23 @@ build_plymouth () {
 	fi
 }
 
+# Build grub-silent
+build_grub () {
+	{ echo "Building grub-silent..."; echo; }
+	cd $DIR/grub-silent
+	makepkg -s
+	mv *.pkg.tar.zst $DIR/x86_64
+	{ rm -rf pkg src; rm -r *.xz *.gz; }
+	# Verify
+	set -- $DIR/x86_64/grub-silent-*
+	if [[ -f "$1" ]]; then
+		{ echo; echo "Package 'grub-silent' generated successfully."; echo; }
+	else
+		{ echo "Failed to build 'grub-silent', Exiting..." >&2; }
+		{ echo; exit 1; }
+	fi
+}
+
 # Setup repository
 setup_repo () {
 	repoargs=("-n -R archcraft.db.tar.gz *.pkg.tar.zst")
@@ -156,5 +174,6 @@ delete_pkg
 download_pkgs
 build_pkgs
 build_plymouth
+build_grub
 setup_repo
 cleanup

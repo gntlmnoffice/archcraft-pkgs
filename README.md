@@ -14,8 +14,10 @@ Compiled Packages Repository For Archcraft OS.
 # Aur Packages
 
 betterlockscreen
+cava
 colorpicker
 compton-tryone-git
+downgrade
 grub-silent
 ksuperkey
 networkmanager-dmenu-git
@@ -23,7 +25,12 @@ obmenu-generator
 perl-linux-desktopfiles
 plymouth
 polybar
+pygtk
+pyroom
 rofi-git
+toilet
+tty-clock
+unimatrix-git
 yay
 
 # Archcraft Packages
